@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Esports Teams</title>
+</head>
+<body>
+    <h1>League of Legends Esports Teams</h1>
+    <button id="fetchData">Fetch Data</button>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById("fetchData").addEventListener("click", fetchData);
+
+        async function fetchData() {
+            const apiKey = 'fee309d327mshd7eb0a5869f4fb0p1c2a86jsn91fa36ef9812';
+            const apiUrl = 'https://league-of-legends-esports.p.rapidapi.com/teams';
+            const params = { id: 'lng-esports' };
+
+            try {
+                const response = await fetch(apiUrl + '?' + new URLSearchParams(params), {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': apiKey,
+                        'X-RapidAPI-Host': 'league-of-legends-esports.p.rapidapi.com'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("response").textContent = JSON.stringify(data, null, 2);
+                } else {
+                    console.error('Error en la solicitud a la API:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Error en la solicitud a la API:', error);
+            }
+        }
+    </script>
+</body>
+</html>
